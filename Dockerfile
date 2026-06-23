@@ -9,10 +9,9 @@ RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY whatsapp-bridge/go.mod whatsapp-bridge/go.sum ./
-RUN go mod download
-
 COPY whatsapp-bridge/ .
+
+RUN go get go.mau.fi/whatsmeow@latest && go mod tidy
 
 RUN CGO_ENABLED=1 GOOS=linux go build -o /whatsapp-bridge .
 
